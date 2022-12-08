@@ -17,6 +17,13 @@ public class Global : MonoBehaviour
     public float gapBlocksY;
     public float gapBlocksZ;
 
+    public float blockYDist;
+    public float blockZDist;
+
+    public float initBallX;
+    public float initBallY;
+    public float initBallZ;
+
     GameObject[] blocks;
     GameObject ball;
 
@@ -31,22 +38,22 @@ public class Global : MonoBehaviour
         }
 
         int count = 0;
-        for (int i = -numBlocksX / 2; i < numBlocksX / 2; ++i) {
-            for (int j = 0; j < numBlocksY; ++j) {
+        for (int i = -numBlocksX / 2; i <= numBlocksX / 2; ++i) {
+            for (int j = -numBlocksY / 2; j <= numBlocksY / 2; ++j) {
                 for (int k = 0; k < numBlocksZ; ++k)
                 {
                     blocks[count++] = Instantiate(blockFab,
-                        new Vector3(i * gapBlocksX, j * gapBlocksY, k * gapBlocksZ),
+                        new Vector3(i * gapBlocksX, blockYDist + j * gapBlocksY, blockZDist + k * gapBlocksZ),
                         Quaternion.identity);
                 }
             }
         }
-        ball = Instantiate(ballFab,
-            new Vector3(0, 0.5f, -4),
-            Quaternion.identity);
+        //ball = Instantiate(ballFab,
+        //    new Vector3(initBallX, initBallY, initBallZ),
+        //    Quaternion.identity);
 
-        Vector3 rand = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-        ball.GetComponent<Rigidbody>().AddRelativeForce(SPEED * rand);
+        //Vector3 rand = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        //ball.GetComponent<Rigidbody>().AddRelativeForce(SPEED * rand);
 
     }
 
