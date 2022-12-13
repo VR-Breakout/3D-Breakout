@@ -17,18 +17,18 @@ public class PositionController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-       // ResetPosition();
-    }
+    {}
 
     // Update is called once per frame
     void Update()
     {
-        if (!called&& playerHead.transform.position.y > 0.2)
+        if (!called && playerHead.transform.position.y > 0.2)
         {
             called = true;
             ResetPosition();
         }
+
+        // controls to limit player position if they leave the boundary
     }
 
     [ContextMenu("Reset Position")]
