@@ -129,3 +129,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpeed: 2
   MaxSpeed: 6
+  SlowThresholdRange: 3
+  constantDrag: 0.05
