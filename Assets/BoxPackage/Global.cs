@@ -9,6 +9,8 @@ public class Global : MonoBehaviour
 
     public float SPEED = 50;
 
+    public int score = 0;
+
     public int numBlocksX;
     public int numBlocksY;
     public int numBlocksZ;
