@@ -51,9 +51,12 @@ public class Global : MonoBehaviour
                     blocks[count] = Instantiate(blockFab,
                         new Vector3(i * gapBlocksX, blockYDist + j * gapBlocksY, blockZDist + k * gapBlocksZ),
                         Quaternion.identity);
+                    blocks[count].name = "Block " + count;
+                    Color color = new Color(0.2f, 0.7f, 0.4f + 0.45f / numBlocksZ * (k + 1), 0.5f + 0.5f / numBlocksZ * (k + 1));
+                    //blocks[count].GetComponent<Renderer>().material.SetColor("_Color", color);
+                    blocks[count].GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
 
-                    Renderer r = blocks[count++].GetComponent<Renderer>();
-                    r.material.color = new Color(0.5f + 0.45f / numBlocksZ * k, 0.5f, 0.5f, 0.5f + 0.45f / numBlocksZ * k);
+                    ++count;
                 }
             }
         }

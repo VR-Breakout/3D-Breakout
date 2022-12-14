@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1007607305016688328}
   - component: {fileID: 5828230767336463956}
   - component: {fileID: -6575371568360615945}
-  m_Layer: 0
+  - component: {fileID: -6458175243752906979}
+  m_Layer: 3
   m_Name: Block
-  m_TagString: Block
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,4 +111,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b7b8ac4da30c04dbc64f732fdeb5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Particle: {fileID: 2410078105942619009, guid: a43377d7f98c93345a0bdcb5fa2cd860, type: 3}
+--- !u!114 &-6458175243752906979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446718025133448515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: e16e5dfd708e0d241910770bfce8bdc2, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
