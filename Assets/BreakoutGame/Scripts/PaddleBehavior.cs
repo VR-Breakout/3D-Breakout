@@ -35,8 +35,10 @@ public class PaddleBehavior : MonoBehaviour
     void FixedUpdate()
     {
         Transform newT = Controller.transform;
-        this.GetComponent<Rigidbody>().MovePosition(newT.position);
-        this.GetComponent<Rigidbody>().MoveRotation(newT.rotation);
+
+        // fixes for ping pong paddle mesh
+        this.GetComponent<Rigidbody>().MovePosition(newT.position - 0.06f * gameObject.transform.up);
+        this.GetComponent<Rigidbody>().MoveRotation(newT.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(0, 90, 0));
 
         Vector3 displace = (this.transform.position - previousPos);
         velocity = displace.magnitude / Time.deltaTime;
@@ -53,9 +55,6 @@ public class PaddleBehavior : MonoBehaviour
                 global.GetComponent<Global>().numHits += 1;
             }
 
-            Vector3 normal = -collision.GetContact(0).normal;
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(normal * velocity); //assume contact is instantaenous? f * t
-
             XRNode node;
             if (handedness == Handedness.left)
             {
@@ -69,7 +68,7 @@ public class PaddleBehavior : MonoBehaviour
             {
                 if (caps.supportsImpulse)
                 {
-                    InputDevices.GetDeviceAtXRNode(node).SendHapticImpulse(0, 0.3f, 0.3f); //channel, amp, seconds
+                    InputDevices.GetDeviceAtXRNode(node).SendHapticImpulse(0, 0.22f, 0.15f); //channel, amp, seconds
                 }
             }
         }

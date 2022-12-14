@@ -16,6 +16,6 @@ public class ScoreTextScript : MonoBehaviour
     void Update()
     {
         int score = Global.score;
-        scoreText.text = score.ToString();
+        scoreText.text = "Score: " + score.ToString();
     }
 }
