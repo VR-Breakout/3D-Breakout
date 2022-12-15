@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.SceneManagement;
+
+using UnityEngine.XR;
 
 public class Global : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class Global : MonoBehaviour
     GameObject[] blocks;
     GameObject ball;
 
+    private InputDevice RightControllerDevice;
+    private InputDevice LeftControllerDevice;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,9 +49,48 @@ public class Global : MonoBehaviour
             return;
         }
 
+        List<InputDevice> devices = new List<InputDevice>();
+
+        InputDeviceCharacteristics rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
+        InputDeviceCharacteristics leftControllerCharacteristics = InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller;
+
+        InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, devices);
+        if(devices.Count > 0)
+        {
+            RightControllerDevice = devices[0];
+        }
+        InputDevices.GetDevicesWithCharacteristics(leftControllerCharacteristics, devices);
+        if (devices.Count > 0)
+        {
+            LeftControllerDevice = devices[0];
+        }
+
+        //Createblocks();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        RightControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool rightTriggerButtonValue);
+        if(rightTriggerButtonValue)
+        {
+            EndGame();
+        }
+        LeftControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool leftTriggerButtonValue);
+        if (leftTriggerButtonValue)
+        {
+            RestartLevel();
+        }
+    }
+
+    public void Createblocks()
+    {
+
         int count = 0;
-        for (int i = -numBlocksX / 2; i <= numBlocksX / 2; ++i) {
-            for (int j = -numBlocksY / 2; j <= numBlocksY / 2; ++j) {
+        for (int i = -numBlocksX / 2; i <= numBlocksX / 2; ++i)
+        {
+            for (int j = -numBlocksY / 2; j <= numBlocksY / 2; ++j)
+            {
                 for (int k = 0; k < numBlocksZ; ++k)
                 {
                     blocks[count] = Instantiate(blockFab,
@@ -68,12 +111,21 @@ public class Global : MonoBehaviour
 
         //Vector3 rand = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         //ball.GetComponent<Rigidbody>().AddRelativeForce(SPEED * rand);
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FreezeGame()
     {
+        Time.timeScale = 0.0f;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
     }
 }
 

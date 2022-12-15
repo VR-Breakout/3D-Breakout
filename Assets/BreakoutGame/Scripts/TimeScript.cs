@@ -28,6 +28,7 @@ public class TimeScript : MonoBehaviour
         {
             // calling end game function here
             //Debug.Log("Completed");
+            Global.FreezeGame();
         }
     }
 }
