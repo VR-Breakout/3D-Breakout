@@ -5,11 +5,12 @@ using UnityEngine;
 public class BackBoundary : MonoBehaviour
 {
     public GameObject global;
+    private AudioSource BreakSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        BreakSound = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,8 +28,9 @@ public class BackBoundary : MonoBehaviour
                 global.GetComponent<Global>().numBackwallHits += 1;
             }
 
-            global.GetComponent<Global>().score -= 2;
-
+            global.GetComponent<Global>().score -= 10;
+            BreakSound.PlayOneShot(BreakSound.clip);
+            Destroy(collision.gameObject);
         }
     }
 }

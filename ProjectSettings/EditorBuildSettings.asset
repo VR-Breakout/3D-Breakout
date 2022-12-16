@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/BreakoutGame/BoxScene.unity
+    guid: a69b072874ee15f44ac977e38bc50486
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a1feb5b941fe24342a5b70ac4b8da343, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fa63525722863fb469812a48ad995b3f, type: 2}

@@ -73,8 +73,4 @@ public class PaddleBehavior : MonoBehaviour
             }
         }
     }
-
-
-    void EndGame()
-    { }
 }

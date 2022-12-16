@@ -15,7 +15,6 @@ public class Global : MonoBehaviour
     public int numHits = 0;
     public int numBackwallHits = 0;
 
-
     public int score = 0;
 
     public int numBlocksX;
@@ -29,63 +28,121 @@ public class Global : MonoBehaviour
     public float blockYDist;
     public float blockZDist;
 
-    public float initBallX;
-    public float initBallY;
-    public float initBallZ;
+    [SerializeField]
+    private GameObject leftPaddle;
+    [SerializeField]
+    private GameObject rightPaddle;
+
+    [SerializeField]
+    private GameObject timerText;
+
+    [SerializeField]
+    private GameObject winText;
+
+    [SerializeField]
+    private GameObject gameoverText;
+
+    private TimeScript timeScript;
 
     GameObject[] blocks;
-    GameObject ball;
 
     private InputDevice RightControllerDevice;
     private InputDevice LeftControllerDevice;
 
+    List<InputDevice> devices;
+
+    private bool triggerPressed = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        devices = new List<InputDevice>();
+
         blocks = new GameObject[numBlocksX * numBlocksY * numBlocksZ];
         if (ballFab == null || blockFab == null)
         {
             Debug.LogError("need assign fabs for ball and block");
             return;
         }
+        CreateBlocks();
+        timeScript = timerText.GetComponent<TimeScript>();
 
-        List<InputDevice> devices = new List<InputDevice>();
-
-        InputDeviceCharacteristics rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
-        InputDeviceCharacteristics leftControllerCharacteristics = InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller;
-
-        InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, devices);
-        if(devices.Count > 0)
-        {
-            RightControllerDevice = devices[0];
-        }
-        InputDevices.GetDevicesWithCharacteristics(leftControllerCharacteristics, devices);
-        if (devices.Count > 0)
-        {
-            LeftControllerDevice = devices[0];
-        }
-
-        //Createblocks();
+        winText.SetActive(false);
+        gameoverText.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        RightControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool rightTriggerButtonValue);
-        if(rightTriggerButtonValue)
+        InputDevices.GetDevices(devices);
+        foreach (var device in devices)
         {
+            if ((device.characteristics & InputDeviceCharacteristics.Right) == InputDeviceCharacteristics.Right) {
+                RightControllerDevice = device;
+            }
+            if ((device.characteristics & InputDeviceCharacteristics.Left) == InputDeviceCharacteristics.Left) {
+                LeftControllerDevice = device;
+            }
+        }
+        RightControllerDevice.TryGetFeatureValue(CommonUsages.menuButton, out bool rightMenuButton);
+        LeftControllerDevice.TryGetFeatureValue(CommonUsages.menuButton, out bool leftMenuButton);
+        RightControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool rightTriggerButton);
+        LeftControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool leftTriggerButton);
+        if ((rightMenuButton && rightTriggerButton) || (leftMenuButton && leftTriggerButton))
+        {
+            Debug.Log("End Game!");
             EndGame();
         }
-        LeftControllerDevice.TryGetFeatureValue(CommonUsages.triggerButton, out bool leftTriggerButtonValue);
-        if (leftTriggerButtonValue)
-        {
+
+        
+        if (rightMenuButton || leftMenuButton) {
             RestartLevel();
         }
+
+        if (rightTriggerButton || leftTriggerButton)
+        {
+            timeScript.startTiming();
+            if (!triggerPressed && rightTriggerButton)
+            {
+                triggerPressed = true;
+                Instantiate(ballFab, rightPaddle.transform.position + 0.4f * rightPaddle.transform.up, Quaternion.identity);
+            }
+            else if (!triggerPressed && leftTriggerButton)
+            {
+                triggerPressed = true;
+                Instantiate(ballFab, leftPaddle.transform.position + 0.4f * leftPaddle.transform.up, Quaternion.identity);
+            }
+        }
+        else
+        {
+            triggerPressed = false;
+        }
+
+        if (GameObject.FindGameObjectWithTag("Block") == null) {
+            // gameover = true
+            foreach (var ball in GameObject.FindGameObjectsWithTag("Ball")) {
+                Destroy(ball);
+            }
+            timeScript.stopTiming();
+            winText.SetActive(true);
+        }
+        //if (leftTriggerButtonValue) {
+        //    RestartLevel();
+        //}
     }
 
-    public void Createblocks()
+    public void GameOver()
     {
+        // gameover = true
+        foreach (var ball in GameObject.FindGameObjectsWithTag("Ball"))
+        {
+            Destroy(ball);
+        }
+        gameoverText.SetActive(true);
+    }
 
+    public void CreateBlocks()
+    {
         int count = 0;
         for (int i = -numBlocksX / 2; i <= numBlocksX / 2; ++i)
         {
@@ -105,12 +162,6 @@ public class Global : MonoBehaviour
                 }
             }
         }
-        //ball = Instantiate(ballFab,
-        //    new Vector3(initBallX, initBallY, initBallZ),
-        //    Quaternion.identity);
-
-        //Vector3 rand = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-        //ball.GetComponent<Rigidbody>().AddRelativeForce(SPEED * rand);
     }
 
     public void FreezeGame()

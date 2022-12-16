@@ -58,7 +58,6 @@ public class BallBehavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // todo
         if (timeElapsedPaddle >= 0.4f && collision.gameObject.CompareTag("Paddle"))
         {
             PaddleHitSound.Play();
