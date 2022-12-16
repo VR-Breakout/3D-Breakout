@@ -6,7 +6,7 @@ public class BlockBehavior : MonoBehaviour
 {
     private Global Global;
 
-    //public ParticleSystem Particle;
+    public ParticleSystem Particle;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +21,10 @@ public class BlockBehavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //if(Particle != null)
-        //{
-        //    Instantiate(Particle, transform.position, Quaternion.identity);
-        //}
+        if (Particle != null)
+        {
+            Instantiate(Particle, transform.position, Quaternion.identity);
+        }
         Global.score += 10;
         Destroy(gameObject, 0.1f);
     }
