@@ -6,8 +6,8 @@ The source code of this project is available in this repository itself.
 The executable can be found in the Github releases (direct link [here](https://github.com/VR-Breakout/VR-Breakout/releases/tag/v1.0)).
 
 ## Demo & Trailer
-Demo link TODO  
-Trailer link TODO
+[Demo link](https://youtu.be/EWWbixV8CAQ)
+[Trailer link](https://youtu.be/0abRJAB6MZE)
 
 ## Documentation
 
@@ -41,4 +41,8 @@ A (*) indicates a major change/revamp from beta to final version.
 Our game setup was plagued with numerous issues. The original desktop we attempted to develop on repeatedly blue-screened and refused to recognize VR headset input. We switched to another desktop, but it seemed to have a variety of Unity-based issues. After some wrangling, we were able to get it to work, but it possessed a GTX Titan, which seemed insufficient in terms of graphical power. As a result, we experienced various slowdowns in our playtesting, and the graphical fidelity of our game had to be downscaled to run properly on the VR headset.
 
 ### Assets Used
-Our sound effects were sourced from a [Free Sound Effects Pack on Unity's asset store](https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776).
+Our sound effects were sourced from [Free Sound Effects Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776), and [FREE Casual Game SFX Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116); and our paddle model is from [Beach Bat](https://assetstore.unity.com/packages/3d/props/beach-bat-103176).
+
+Trailer Music from [Orbit (Free Ambient Video Game Music)](https://assetstore.unity.com/packages/audio/ambient/orbit-free-ambient-video-game-music-204571).
+
+
