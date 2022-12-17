@@ -2,6 +2,9 @@
 VR Breakout marries old school and new tech. It's is a simple 3D Breakout game playable only in VR, tested on HTC Vive Pro 2.   
 Developed for CIS5680 at the University of Pennsylvania.
 
+The source code of this project is available in this repository itself.  
+The executable can be found in the Github releases (direct link [here](https://github.com/VR-Breakout/VR-Breakout/releases/tag/v1.0)).
+
 ## Demo & Trailer
 Demo link TODO  
 Trailer link TODO
